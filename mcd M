@@ -1,0 +1,17 @@
+clear all;
+
+% calcolo del mcd tramite il metodo di Euclide 
+
+a=input('digita il primo fattore:' );
+b=input('digita il secondo fattore:' );
+
+while ne(a,b) % alternativa a "while (a-b)~=0" 
+    if a>b  
+        a=a-b;
+    else 
+        b=b-a; 
+    end 
+end 
+
+disp('mcd: ')
+disp(a)
