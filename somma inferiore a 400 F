@@ -1,0 +1,24 @@
+PROGRAM SOMM400 
+       
+       IMPLICIT NONE
+       INTEGER I, N, X, SOMMA, ULTIMO 
+       
+       PRINT*, 'DIGITARE UN VALORE INTERO'
+       READ*, X 
+       
+       N=400
+       SOMMA=0 
+       ULTIMO=0 
+       
+       DO I=1, X 
+        IF (SOMMA+I >= N) EXIT 
+        SOMMA= SOMMA+I 
+        ULTIMO=I 
+        PRINT*, 'SOMMA: ', SOMMA
+        PRINT*, 'VALORE SOMMATO: ', ULTIMO 
+       END DO 
+       
+       PRINT*, 'SOMMA, INFERIORE A 400: ', SOMMA  
+       PRINT*,'SI SOMMA FINO A', ULTIMO  
+       
+       END 
