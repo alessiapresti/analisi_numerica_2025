@@ -1,0 +1,22 @@
+PROGRAM MCD 
+
+IMPLICIT NONE 
+INTEGER :: A, B, Q, ULTIMO, R, X  
+
+PRINT*, 'PRIMO FATTORE:'
+READ*, A
+PRINT*, 'SECONDO FATTORE:'
+READ*, B 
+
+DO WHILE (B/=0)
+    Q=A/B 
+    R=A-B*Q 
+    PRINT*, A,'=',B,'*',Q,'+', R !ALGORITMO DI EUCLIDE
+    !SCAMBI PER ITERARE 
+    A=B 
+    B=R 
+END DO 
+
+PRINT*, 'MCD:', A
+ 
+END 
