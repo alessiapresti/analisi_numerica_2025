@@ -1,0 +1,14 @@
+PROGRAM SOMM100
+       
+       IMPLICIT NONE
+       INTEGER I, N, SOMMA 
+       
+       N=100
+       SOMMA=0
+       DO I=1, N 
+        SOMMA=SOMMA+I 
+       END DO 
+       
+       PRINT*, 'LA SOMMA DEI PRIMI 100 NUMERI: ', SOMMA 
+       
+       END 
