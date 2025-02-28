@@ -8,3 +8,6 @@ ris1=(x*y')*z
 
 disp("x*(y'*z)")
 ris2=x*(y'*z)
+
+x*y'
+y'*z
