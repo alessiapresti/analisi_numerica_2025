@@ -1,0 +1,10 @@
+y=[2,4,5]
+z=[3,2,1]
+
+ytrasp=y'
+
+disp("(x*y')*z")
+ris1=(x*y')*z
+
+disp("x*(y'*z)")
+ris2=x*(y'*z)
