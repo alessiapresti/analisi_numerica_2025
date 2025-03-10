@@ -1,0 +1,46 @@
+PROGRAM TRIANGOLARE INFERIORE 
+       
+       
+       REAL*8 B(10), A(10,10), X(10) 
+       INTEGER I, J, N, SOMMA 
+       
+       SOMMA=0 
+       
+       PRINT*, 'DIGITARE LA DIMENSIONE DELLA MATRICE' 
+       READ*, N
+       
+       DO I=1,N 
+           DO J=1,N 
+            IF (I.GE.J) THEN 
+                PRINT*, 'DIGITARE L.ELEMENTO A', I, ',', J 
+                READ*, A(I,J) 
+            ELSE 
+                A(I,J)=0 
+            END IF 
+           END DO
+       END DO 
+       
+       DO I=1,N 
+        PRINT*, 'DIGITARE L.ELEMENTO B', I 
+        READ*, B(I) 
+       END DO 
+       
+       DO I=1, N 
+        PRINT*, (A(I,J), J=1,N), '|', B(I) 
+       END DO 
+       
+       DO I=I, N
+        DO J=1,I-1 
+            SOMMA=SOMMA+A(I,J)*X(J) 
+            X(I)=(B(I)-SOMMA)/A(I,I) 
+        END DO 
+       END DO 
+       
+       PRINT*, 'LE SOLUZIONI SONO:' 
+       DO I=1,N 
+           DO J=1,N 
+            PRINT*, X(I)
+           END DO 
+       END DO 
+       
+       END PROGRAM 
