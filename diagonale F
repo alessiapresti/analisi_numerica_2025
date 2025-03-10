@@ -1,0 +1,27 @@
+PROGRAM DIAGONALE 
+       
+       REAL*8 B(10), A(10,10), X(10) 
+       INTEGER I, N 
+       
+       PRINT*, 'DIGITARE LA DIMENSIONE DELLA MATRICE' 
+       READ*, N
+       
+       DO I=1,N 
+        PRINT*, 'DIGITARE L.ELEMENTO A', I, ',', I 
+        READ*, A(I,I) 
+       END DO 
+       
+       DO I=1,N 
+        PRINT*, 'DIGITARE L.ELEMENTO B', I 
+        READ*, B(I)
+       END DO 
+       
+       DO I=1,N 
+        X(I)=B(I)/A(I,I)
+       END DO
+       
+       DO I=1,N 
+           PRINT*, 'LE SOLUZIONI SONO:', X(I)
+       END DO 
+       
+       END PROGRAM 
