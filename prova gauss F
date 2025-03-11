@@ -1,0 +1,55 @@
+PROGRAM GAUSS 
+
+           REAL*8 B(10), A(10,10), X(10), M(10,10) 
+           INTEGER I, J, K, N
+           
+           PRINT*, 'DIGITARE IL GRADO DELLA MATRICE' 
+           READ*, N
+           
+           DO I=1,N 
+               DO J=1,N 
+                PRINT*, 'DIGITARE L.ELEMENTO A', I, ',', J 
+                READ*, A(I,J) 
+               END DO
+           END DO 
+           
+           DO I=1,N 
+            PRINT*, 'DIGITARE L.ELEMENTO B', I 
+            READ*, B(I) 
+           END DO 
+           
+           DO I=1, N 
+            PRINT*, (A(I,J), J=1,N), '|', B(I) 
+           END DO 
+           
+           
+          DO K=1,N-1
+            IF (A(K,K).EQ.0) THEN 
+                PRINT*, 'PIVOT', STOP 
+            END IF  
+            DO I=K+1,N 
+                M(I,K)=A(I,K)/A(K,K) 
+                DO J=K+1,N
+                    A(I,J)=A(I,J)-M(I,K)*A(K,J)
+                END DO 
+                B(I)=B(I)-M(I,K)*B(K)
+            END DO
+          END DO 
+          
+          !A(I,K)=M(I,K) 
+          
+          X(N)=B(N)/A(N,N) 
+          DO I=N-1,1,-1
+            X(I)=B(I)
+            DO J=I+1,N
+                X(I)=X(I)-A(I,J)*X(J) 
+            END DO 
+            X(I)=X(I)/A(I,I) 
+          END DO 
+            
+          PRINT*,'SOLUZIONE:'
+          DO I=1,N 
+            PRINT*, 'X(',I,')=', X(I) 
+          END DO 
+          
+          END 
