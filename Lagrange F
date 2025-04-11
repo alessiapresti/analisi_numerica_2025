@@ -1,0 +1,45 @@
+       PROGRAM Prova_Lagrange 
+       
+       IMPLICIT NONE 
+       INTEGER, PARAMETER :: nn=200 
+       REAL, PARAMETER:: PI=3.141593
+       REAL*8 A,B, XC(0:nn), XG(0:nn), YG(0:nn), H, X(0:nn), Y(0:nn)
+       REAL*8 L(0:nn), PN(0:nn)
+       INTEGER N, I, J, K, NG  
+       
+       PRINT*, 'POLINOMIO DI LAGRANGE CON NODI DI CHEBYCHOV'
+       PRINT*, 'DIGITARE IL GRADO DEL POLINOMIO'
+       READ(*,*) N 
+       
+       A=-5
+       B=5
+       NG=100
+       H=(B-A)/NG 
+       
+       DO I=0,NG
+        PN(I)=0
+        XG(I)=A+I*H
+        YG(I)=3*XG(I)**3+2*XG(I)**2-XG(I)+5 
+       END DO 
+       
+       PRINT*, 'I NODI SONO:' 
+       DO I=0,N 
+        X(I)=COS((2.*I+1)/((N+1)*(PI/2.)))
+        XC=(A+B)*0.5-(B-A)*X(I)*0.5 
+        Y(I)=3*XC(I)**3+2*XC(I)**2-XC(I)*5 
+        PRINT*, XC(I),Y(I) 
+       END DO 
+       
+       DO K=0,NG
+        DO I=0,N
+            L(I)=1
+            DO J=0,N 
+                IF (I.NE.J) THEN 
+                    L(I)=L(I)*(XG(K)-X(I))/(X(I)-X(J))
+                END IF 
+            END DO 
+        END DO 
+        PN(K)=PN(K)+Y(I)*L(I)
+        END DO 
+        
+        END PROGRAM 
