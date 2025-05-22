@@ -1,0 +1,65 @@
+PROGRAM GAUSS
+  IMPLICIT NONE
+  REAL*8 :: A(100,101), X(100), DET
+  INTEGER :: N, I, J, K
+
+  PRINT*, 'DIGITA IL GRADO DEL SISTEMA'
+  READ*, N
+
+  ! Inserisci la matrice A e il vettore B
+  DO I=1,N
+     DO J=1,N
+        PRINT*, 'A(',I,',',J,') = '
+        READ*, A(I,J)
+     END DO
+  END DO
+  
+  DO I=1,N 
+    PRINT*, 'B(',I,') = '
+     READ*, A(I,N+1)
+  END DO 
+
+  ! Stampa matrice aumentata
+  PRINT*, 'MATRICE AUMENTATA:'
+  DO I=1,N
+     PRINT*, (A(I,J), J=1,N), '|', A(I,N+1)
+  END DO
+
+  ! Eliminazione di Gauss
+  DO K=1,N-1
+     IF (A(K,K) == 0.0D0) THEN
+        PRINT*, 'ERRORE: pivot nullo in riga ', K
+        STOP
+     END IF
+     DO I=K+1,N
+        A(I,K) = A(I,K) / A(K,K)  ! moltiplicatore
+        DO J=K+1,N+1
+           A(I,J) = A(I,J) - A(I,K) * A(K,J)
+        END DO
+     END DO
+  END DO
+
+  ! Calcolo determinante come prodotto dei pivot
+  DET = 1.0D0
+  DO I=1,N
+     DET = DET * A(I,I)
+  END DO
+  PRINT*, 'DET(A) =', DET
+
+  ! Sostituzione all'indietro
+  X(N) = A(N,N+1) / A(N,N)
+  DO I=N-1,1,-1
+     X(I) = A(I,N+1)
+     DO J=I+1,N
+        X(I) = X(I) - A(I,J)*X(J)
+     END DO
+     X(I) = X(I) / A(I,I)
+  END DO
+
+  ! Soluzioni
+  PRINT*, 'LE SOLUZIONI SONO:'
+  DO I=1,N
+     PRINT*, 'X(',I,') = ', X(I)
+  END DO
+
+END PROGRAM GAUSS
