@@ -1,0 +1,71 @@
+PROGRAM THOMAS_SINGLE_MATRIX
+  IMPLICIT NONE
+  INTEGER N, I, J
+  REAL*8 A(100,100), D(100), X(100), M
+
+  PRINT*, 'DIGITA LA DIMENSIONE DEL SISTEMA (N):'
+  READ*, N
+
+  ! Inizializzazione della matrice A a zeri
+  DO I = 1, N
+    DO J = 1, N
+      A(I,J) = 0.0D0
+    END DO
+  END DO
+
+  ! Inserimento degli elementi della tridiagonale in A
+  PRINT*, '(diagonale principale) ='
+  DO I = 1, N
+    PRINT*, 'A(', I, ',', I, ') '
+    READ*, A(I, I)
+  END DO 
+  
+  PRINT*, '(sotto-diagonale ) ='
+
+  DO I=1,N
+    IF (I > 1) THEN
+      PRINT*, 'A(', I, ',', I-1, ')'
+      READ*, A(I, I-1)
+    END IF
+END DO 
+    
+PRINT*, '(sovra-diagonale ) ='
+
+DO I=1,N 
+    IF (I < N) THEN
+      PRINT*, 'A(', I, ',', I+1, ') '
+      READ*, A(I, I+1)
+    END IF
+  END DO
+
+PRINT*, 'MATRICE'
+DO I=1,N 
+    PRINT*, (A(I,J), J=1,N)
+END DO 
+
+
+  ! Inserimento termini noti
+  DO I = 1, N
+    PRINT*, 'D(', I, ') = '
+    READ*, D(I)
+  END DO
+
+  ! Forward elimination
+  DO I = 2, N
+    M = A(I, I-1) / A(I-1, I-1)
+    A(I, I) = A(I, I) - M * A(I-1, I)
+    D(I) = D(I) - M * D(I-1)
+  END DO
+
+  ! Backward substitution
+  X(N) = D(N) / A(N, N)
+  DO I = N-1, 1, -1
+    X(I) = (D(I) - A(I, I+1) * X(I+1)) / A(I, I)
+  END DO
+
+  PRINT*, 'SOLUZIONE DEL SISTEMA:'
+  DO I = 1, N
+    PRINT*, 'X(', I, ') = ', X(I)
+  END DO
+
+END PROGRAM THOMAS_SINGLE_MATRIX
