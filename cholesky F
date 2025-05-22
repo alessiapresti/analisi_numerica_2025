@@ -46,3 +46,94 @@ DET=RADET**2
 PRINT*, DET 
     
 END 
+
+
+MODIFICATO 22/5 
+PROGRAM CHOLESKY
+  IMPLICIT NONE
+  INTEGER, PARAMETER :: N = 3
+  COMPLEX :: A(N,N), SUM1, SUM2, DET, RADET
+  REAL :: d1, d2, d3
+  INTEGER :: I, J, K
+
+  ! Inizializzazione matrice A (Hermitiana positiva definita)
+  A(1,1) = (3.0, 0.0)
+  A(1,2) = (2.0, 0.0)
+  A(1,3) = (-1.0, 0.0)
+
+  A(2,1) = CONJG(A(1,2))  ! = (2.0, 0.0)
+  A(2,2) = (5.0, 0.0)
+  A(2,3) = (-2.0, 0.0)
+
+  A(3,1) = CONJG(A(1,3))  ! = (-1.0, 0.0)
+  A(3,2) = CONJG(A(2,3))  ! = (-2.0, 0.0)
+  A(3,3) = (3.0, 0.0)
+
+  ! STAMPA matrice iniziale
+  PRINT *, 'Matrice A iniziale:'
+  DO I = 1, N
+     PRINT *, (A(I,J), J = 1, N)
+  END DO
+
+  ! Verifica che A sia Hermitiana
+  DO I = 1, N
+     DO J = I+1, N
+        IF (A(I,J) .NE. CONJG(A(J,I))) THEN
+           PRINT *, 'ERRORE: la matrice non è Hermitiana.'
+           STOP
+        END IF
+     END DO
+  END DO
+
+  ! Verifica che A sia definita positiva
+  d1 = REAL(A(1,1))
+  d2 = REAL(A(1,1)*A(2,2) - A(1,2)*A(2,1))
+  d3 = REAL(A(1,1)*A(2,2)*A(3,3) + A(1,2)*A(2,3)*A(3,1) + A(1,3)*A(2,1)*A(3,2) &
+       - A(1,3)*A(2,2)*A(3,1) - A(1,2)*A(2,1)*A(3,3) - A(1,1)*A(2,3)*A(3,2))
+
+  IF (d1 <= 0.0 .OR. d2 <= 0.0 .OR. d3 <= 0.0) THEN
+     PRINT *, 'ERRORE: la matrice non è definita positiva.'
+     STOP
+  END IF
+
+  ! Fattorizzazione di Cholesky (A = L * Lᴴ) in-place
+  DO J = 1, N
+     SUM1 = (0.0, 0.0)
+     DO K = 1, J-1
+        SUM1 = SUM1 + A(J,K) * CONJG(A(J,K))
+     END DO
+     A(J,J) = SQRT(A(J,J) - SUM1)
+
+     IF (J < N) THEN
+        DO I = J+1, N
+           SUM2 = (0.0, 0.0)
+           DO K = 1, J-1
+              SUM2 = SUM2 + A(I,K) * CONJG(A(J,K))
+           END DO
+           A(I,J) = (A(I,J) - SUM2) / A(J,J)
+        END DO
+     END IF
+  END DO
+
+  ! Pulizia parte superiore per ottenere solo L
+  DO I = 1, N
+     DO J = I+1, N
+        A(I,J) = (0.0, 0.0)
+     END DO
+  END DO
+
+  PRINT *, 'Matrice L (in parte inferiore di A):'
+  DO I = 1, N
+     PRINT *, (A(I,J), J = 1, N)
+  END DO
+
+  ! Calcolo determinante: |L11 * L22 * L33|²
+  RADET = (1.0, 0.0)
+  DO J = 1, N
+     RADET = RADET * A(J,J)
+  END DO
+
+  DET = RADET * CONJG(RADET)
+  PRINT *, 'Determinante =', DET
+
+END PROGRAM CHOLESKY
