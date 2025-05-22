@@ -25,3 +25,47 @@ PROGRAM DIAGONALE
        END DO 
        
        END PROGRAM 
+
+
+modificato il 22?5 con chatgpt, ma i risultati coincidono
+PROGRAM DIAGONALE
+  IMPLICIT NONE
+  REAL*8 :: B(10), A(10,10), X(10)
+  INTEGER :: I, J, N
+
+  PRINT*, 'DIGITARE LA DIMENSIONE DELLA MATRICE (MAX 10):'
+  READ*, N
+
+  IF (N < 1 .OR. N > 10) THEN
+     PRINT*, 'ERRORE: dimensione non valida.'
+     STOP
+  END IF
+
+  ! Inizializza tutta A a 0.0D0
+  A = 0.0D0
+
+  DO I = 1, N
+     PRINT*, 'DIGITARE L''ELEMENTO A(', I, ',', I, '):'
+     READ*, A(I,I)
+  END DO
+
+  DO I = 1, N
+     PRINT*, 'DIGITARE L''ELEMENTO B(', I, '):'
+     READ*, B(I)
+  END DO
+
+  DO I = 1, N
+     IF (A(I,I) == 0.0D0) THEN
+        PRINT*, 'ERRORE: elemento diagonale A(',I,',',I,') è zero.'
+        STOP
+     END IF
+     X(I) = B(I) / A(I,I)
+  END DO
+
+  PRINT*, 'LE SOLUZIONI SONO:'
+  DO I = 1, N
+     PRINT*, 'X(', I, ') = ', X(I)
+  END DO
+
+END PROGRAM DIAGONALE
+
