@@ -1,0 +1,66 @@
+modificato 22/5 tramite chatgpt 
+
+PROGRAM GAUSSJORDAN
+  IMPLICIT NONE
+  REAL*8 A(100, 200)
+  INTEGER N, I, J, K
+  REAL*8 PIVOT, FACTOR
+
+  PRINT*, 'DIGITA IL GRADO DEL SISTEMA'
+  READ*, N
+
+  ! Inizializza tutta la matrice aumentata
+  DO I = 1, N
+     DO J = 1, 2*N
+        A(I, J) = 0.0D0
+     END DO
+  END DO
+
+  ! Inserimento della matrice A
+  DO I = 1, N
+     DO J = 1, N
+        PRINT*, 'A(', I, ',', J, ') ='
+        READ*, A(I, J)
+     END DO
+  END DO
+
+  ! Aggiunta della matrice identità a destra
+  DO I = 1, N
+     A(I, N+I) = 1.0D0
+  END DO
+
+  PRINT*, 'MATRICE AUMENTATA INIZIALE:'
+  DO I = 1, N
+     PRINT*, (A(I, J), J = 1, 2*N)
+  END DO
+
+  ! Gauss-Jordan
+  DO K = 1, N
+     PIVOT = A(K, K)
+     IF (PIVOT == 0.0D0) THEN
+        PRINT*, 'ERRORE: pivot nullo in riga ', K
+        STOP
+     END IF
+
+     ! Normalizza la riga K
+     DO J = 1, 2*N
+        A(K, J) = A(K, J) / PIVOT
+     END DO
+
+     ! Elimina gli altri elementi nella colonna K
+     DO I = 1, N
+        IF (I /= K) THEN
+           FACTOR = A(I, K)
+           DO J = 1, 2*N
+              A(I, J) = A(I, J) - FACTOR * A(K, J)
+           END DO
+        END IF
+     END DO
+  END DO
+
+  PRINT*, 'MATRICE INVERSA (A^-1):'
+  DO I = 1, N
+     PRINT*, (A(I, J), J = N+1, 2*N)
+  END DO
+
+END PROGRAM
